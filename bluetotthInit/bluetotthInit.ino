@@ -1,16 +1,19 @@
-// Bluetooth 
+// Bluetooth
 #include <SoftwareSerial.h>
 SoftwareSerial mySerial(10, 11);
 // Pin for the LED/motor
 #define LEDPIN 13
-#define MOTORPIN 6
-bool glow;
+#define MOTORPIN 3
+bool glow, lastGlow;
 // Setup
+long lastDebounceTime;
+long debounceDelay = 50;
 void setup()
 {
   pinMode(LEDPIN, OUTPUT);
   pinMode(MOTORPIN, OUTPUT);
   glow = true;
+  analogWrite(MOTORPIN, 0);
   mySerial.begin(9600);
   mySerial.println("Connected");
   Serial.begin(9600);
@@ -19,40 +22,43 @@ void setup()
 
 void loop()
 {
-    /*** COMPUTER SERIAL ***/
-    if (Serial.available()) {
+  /*** DEBOUNCE ***/
 
-      // Read command
-      byte c = Serial.read ();
+  /*** COMPUTER SERIAL ***/
+  if (Serial.available()) {
 
-      // If a measurement is requested, measure data and send it back
-      if (c == 'm'){
+    // Read command
+    byte c = Serial.read ();
 
-          glow = !glow;
-    
-          // Send data (temperature,humidity)
-          Serial.println(String(glow) + " from Computer !");
-          if (mySerial.available()) {
-           Serial.println(String(glow) + " from Phone !");
-         }
+    // If a measurement is requested, measure data and send it back
+    if (c == 'm') {
+
+      glow = !glow;
+
+      // Send data (temperature,humidity)
+      Serial.println(String(glow) + " from Computer !");
+      if (mySerial.available()) {
+        Serial.println(String(glow) + " from Phone !");
       }
+    }
   }
-    /*** bluetooth Serial ***/
+  /*** bluetooth Serial ***/
   if (mySerial.available()) {
 
-      // Read command
-      byte c = mySerial.read ();
-      // If a measurement is requested, measure data and send it back
-      if (c == 'm'){
-
-          glow = !glow;
-          
-          // Send data (temperature,humidity)
-          mySerial.println(String(glow) + " from Phone !");
-      }
+    // Read command
+    //  int speed = mySerial.parseInt();
+    byte speed = mySerial.read();
+    if (speed > 0 ) {
+      analogWrite(MOTORPIN, speed);
+    }
+    // If a measurement is requested, measure data and send it back
+    mySerial.println("Speed set at " + String(speed) + " from Phone !");
+    if ( Serial.available()){
+      Serial.println("Speed set at " + String(speed) + " from Phone !");
+    }
   }
 
   /*** LED 13 to debug ***/
-  glow?digitalWrite(LEDPIN,LOW) : digitalWrite(LEDPIN,HIGH);
-  glow?digitalWrite(MOTORPIN,LOW) : digitalWrite(MOTORPIN, HIGH);
+  glow ? digitalWrite(LEDPIN, LOW) : digitalWrite(LEDPIN, HIGH);
+
 }

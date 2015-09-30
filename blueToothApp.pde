@@ -15,6 +15,7 @@ boolean isConf, connecting, isConnect;
 String deviceName ="";
 PFont avNextMed ;
 float d;
+int speed ;
 //*****************************
 // Enable Bluetooth at startup.
 //*****************************
@@ -79,10 +80,14 @@ void draw() {
   if(isConnect){
     background(78, 93, 75);
     text("Connected to " + deviceName, width/2 -100,50);
+    text("Speed : " + speed, 70, 200);
     pushStyle();
-    fill( 255,00,00);
-     ellipse(width/2,height*0.8,150,150);
-     popStyle();
+    strokeWeight(5);
+    line(50,height/2, width-50, height/2);
+    noStroke();
+    fill(5,150,00);
+    ellipse(mouseX- 75 ,height/2,150,150);
+    popStyle();
   }
 }
 

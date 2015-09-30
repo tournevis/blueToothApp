@@ -1,4 +1,5 @@
-void mouseReleased() {
+void mousePressed() {
+  d = dist(mouseX, mouseY, width/2, height*0.8 );
   if (isConf) {
     if (mouseY > height-150 ) {
       if (bt.getDiscoveredDeviceNames().size() > 0)
@@ -13,23 +14,24 @@ void mouseReleased() {
       popStyle();
     }
   }
-  if (isConnect) {
-    if ( d < 50 ) {
-      pushStyle();
-      fill( 150,00,00);
-       ellipse(width/2,height*0.8,150,150);
-       popStyle();
-      char m = 'm';
-      byte[] bm = new byte[1];
-      bm[0] = byte(m);
-      if (bt.getConnectedDeviceNames().size() >0) {
-        bt.writeToDeviceName( deviceName, bm);
-      }
-    }
-  }
 }
-void mousePressed(){
-  d = dist(mouseX, mouseY, width/2, height*0.8 );
+void mouseDragged() {
+  if (isConnect) {
+    //if ( d < 250 ) {
+    pushStyle();
+    fill( 150, 00, 00);
+    ellipse(width/2, height*0.8, 150, 150);
+    popStyle();
+    float mapSpeed =  map(mouseX, 20, width, 0, 250);
+    speed = int(mapSpeed);
+
+    byte[] bm = new byte[1];
+    bm[0] = byte(speed);
+    if (bt.getConnectedDeviceNames().size() >0) {
+      bt.writeToDeviceName( deviceName, bm);
+    }
+    //}
+  }
 }
 void onKetaiListSelection(KetaiList klist)
 {
