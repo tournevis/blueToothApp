@@ -13,22 +13,46 @@ void mousePressed() {
       rect(0, height -150, width, 150);
       popStyle();
     }
+    if (mouseY > height-300 && mouseY < height-150 && !bt.isDiscovering()) {  
+      bt.discoverDevices();
+      pushStyle();
+      noStroke();
+      fill(120);
+      rect(0, height -300, width, 150);
+      popStyle();
+    }
   }
+  if (isConnect && mouseY > height-150) {
+    pushStyle();
+    fill(120);
+    rect(0,height-150, width,150);
+    popStyle();
+    byte[] bm = new byte[1];
+    bm[0] = byte(speed);
+    bt.writeToDeviceName( deviceName, bm);
+  }
+}
+void keyPressed() {
+  /* if (key == CODED){
+   if(keyCode == KeyEvent.KEYCODE_BACK){
+   isConnect = false ;
+   connecting = false;
+   deviceName = "";
+   }
+   }
+   */
 }
 void mouseDragged() {
   if (isConnect) {
-    //if ( d < 250 ) {
-    pushStyle();
-    fill( 150, 00, 00);
-    ellipse(width/2, height*0.8, 150, 150);
-    popStyle();
-    float mapSpeed =  map(mouseX, 20, width, 0, 250);
-    speed = int(mapSpeed);
 
-    byte[] bm = new byte[1];
-    bm[0] = byte(speed);
-    if (bt.getConnectedDeviceNames().size() >0) {
-      bt.writeToDeviceName( deviceName, bm);
+    //if ( d < 250 ) {
+    /*pushStyle();
+     fill( 150, 00, 00);
+     ellipse(width/2, height*0.8, 150, 150);
+     popStyle();*/
+    if (mouseX > 40 && mouseX < width-40 && mouseY < height- 150) {
+      float mapSpeed =  map(mouseX, 40, width-40, 0, 255);
+      speed = int(mapSpeed);
     }
     //}
   }
@@ -39,6 +63,8 @@ void onKetaiListSelection(KetaiList klist)
   deviceName = selection;
   bt.connectToDeviceByName(selection);
   connecting = true;
+
   //dispose of list for now
+
   klist = null;
 }
