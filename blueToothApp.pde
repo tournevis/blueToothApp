@@ -33,26 +33,6 @@ void onActivityResult(int requestCode, int resultCode, Intent data) {
 
 //****************************
 
-
-///////////////////////////// Config your setup here! ////////////////////////////
-
-// This is where you enter your Oauth info
-static String OAuthConsumerKey = "Hnb2caMQlkw4veaXCOR2Pw";
-static String OAuthConsumerSecret = "FxlCn9q3tYp5ya4GP0087mtXGApeweojqpAkVbymmtc";
-// This is where you enter your Access Token info
-static String AccessToken = "471885262-wrfQt7P3p7CyUO6QQaihd9vy3uoCZ95DBhMJlCzW";
-static String AccessTokenSecret = "4QX8FH3IdPxUocLjaoqP0cmtuLNwGPrVqiPYEGjTg";
-
-// if you enter keywords here it will filter, otherwise it will sample
-String keywords[] = {"nasa"};
-int tweetCount;
-///////////////////////////// End Variable Config ////////////////////////////
-
-TwitterStream twitter = new TwitterStreamFactory().getInstance();
-
-
-
-
 void setup()
 {  
   orientation(PORTRAIT);
@@ -68,25 +48,6 @@ void setup()
   loader = new loader( 50, 255);
   bt.start();
   bt.discoverDevices();
-  
-  //Init Twitter :
-  tweetCount= 0;
-  connectTwitter();
-  twitter.addListener(listener);
-  if (keywords.length==0) twitter.sample();
-  else twitter.filter(new FilterQuery().track(keywords));
-}
-
-// Initial connection
-void connectTwitter() {
-  twitter.setOAuthConsumer(OAuthConsumerKey, OAuthConsumerSecret);
-  AccessToken accessToken = loadAccessToken();
-  twitter.setOAuthAccessToken(accessToken);
-}
-
-// Loading up the access token
-private static AccessToken loadAccessToken() {
-  return new AccessToken(AccessToken, AccessTokenSecret);
 }
 
 void draw() {
@@ -113,9 +74,9 @@ void draw() {
     if (bt.isDiscovering() ) {
       loader.display(width/2, height -220 );
     } else {
-      text("DISCOVER ",width/3,height-220);
+      text("DISCOVER ", width/3, height-220);
     }
-    text("CONNECT ",width/3,height-60);
+    text("CONNECT ", width/3, height-60);
     if (connecting) {
       pushStyle();
       fill(0);
@@ -132,22 +93,22 @@ void draw() {
     // SLIDER SECTION 
     text("Connected to " + deviceName, width/2 -100, 50);
     text("Speed : " + speed, 70, 200);
-    
+
     pushStyle();
     strokeWeight(5);
     line(50, height/2, width-50, height/2);
     noStroke();
     fill(5, 150, 00);
-    if(mouseY < height-150){
+    if (mouseY < height-150) {
       ellipse(mouseX- 75, height/2, 150, 150);
     }
     popStyle();
-    
+
     //BOUTON 
-    text("Send byte : " + speed , width/2 -40, height-60);
+    text("Send byte : " + speed, width/2 -40, height-60);
     pushStyle();
     fill(80);
-    rect(0,height-150, width,150);
+    rect(0, height-150, width, 150);
     popStyle();
   }
 }
