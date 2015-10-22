@@ -9,6 +9,8 @@ import ketai.net.*;
 import oscP5.*;
 
 loader loader;
+btn connectBtn;
+btn sendDataBtn;
 KetaiBluetooth bt;
 String info = "";
 KetaiList klist;
@@ -18,7 +20,7 @@ PFont avNextMed ;
 float d;
 int speed ;
 color c1 = #FFCC00;
-color back = color(78, 93, 75);
+color back = #383D3B;
 //*****************************
 // Enable Bluetooth at startup.
 //*****************************
@@ -45,7 +47,9 @@ void setup()
   avNextMed = createFont("hirak.otf", 32, true);
   ellipseMode(CENTER);
   //start listening for BT connections
-  loader = new loader( 50, 255);
+  loader = new loader(50,255);
+  connectBtn = new btn(0, height -150, width, 150, "CONNECT", color(#00A896));
+  sendDataBtn = new btn(0, height -150, width, 150, "SEND DATA", color(#00A896));
   bt.start();
   bt.discoverDevices();
 }
@@ -64,33 +68,36 @@ void draw() {
     }
 
     text("Aviable Device :\n\n" + info, 15, 360);
+     
     pushStyle();
     noStroke();
-    fill(70);
-    rect(0, height -150, width, 150);
-    fill(100);
+    fill(#02C39A);
     rect(0, height -300, width, 150);
     popStyle();
+    connectBtn.display();
     if (bt.isDiscovering() ) {
       loader.display(width/2, height -220 );
     } else {
       text("DISCOVER ", width/3, height-220);
     }
-    text("CONNECT ", width/3, height-60);
+   
     if (connecting) {
+      fill(255);
       pushStyle();
       fill(0);
+      noStroke();
       alpha(100);
       rect(0, 0, width, height);
       popStyle();
       loader.display(width/2, height/2 + 60);
-      text("     Connecting to: \n" + deviceName, width/2 -200, height /2-20);
+      text("Connecting to: \n" + deviceName, width/2 -200, height /2-20);
       getBluetoothInformation();
     }
   }
   if (isConnect) {
-    background(78, 93, 75);
+    background(back);
     // SLIDER SECTION 
+    fill(255);
     text("Connected to " + deviceName, width/2 -100, 50);
     text("Speed : " + speed, 70, 200);
 
@@ -103,13 +110,7 @@ void draw() {
       ellipse(mouseX- 75, height/2, 150, 150);
     }
     popStyle();
-
-    //BOUTON 
-    text("Send byte : " + speed, width/2 -40, height-60);
-    pushStyle();
-    fill(80);
-    rect(0, height-150, width, 150);
-    popStyle();
+    sendDataBtn.display();
   }
 }
 

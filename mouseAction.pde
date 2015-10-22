@@ -1,17 +1,12 @@
 void mousePressed() {
   d = dist(mouseX, mouseY, width/2, height*0.8 );
   if (isConf) {
-    if (mouseY > height-150 ) {
+    if (connectBtn.clicked(mouseX,mouseY) ) {
       if (bt.getDiscoveredDeviceNames().size() > 0)
         klist = new KetaiList(this, bt.getDiscoveredDeviceNames());
       else if (bt.getPairedDeviceNames().size() > 0)
         klist = new KetaiList(this, bt.getPairedDeviceNames());
       // bt.discoverDevices();
-      pushStyle();
-      noStroke();
-      fill(80);
-      rect(0, height -150, width, 150);
-      popStyle();
     }
     if (mouseY > height-300 && mouseY < height-150 && !bt.isDiscovering()) {  
       bt.discoverDevices();
@@ -22,7 +17,7 @@ void mousePressed() {
       popStyle();
     }
   }
-  if (isConnect && mouseY > height-150) {
+  if (isConnect && sendDataBtn.clicked(mouseX,mouseY) ) {
     pushStyle();
     fill(120);
     rect(0,height-150, width,150);
