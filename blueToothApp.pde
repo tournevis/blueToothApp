@@ -7,7 +7,7 @@ import ketai.ui.*;
 import ketai.net.*;
 import oscP5.*;
 
-/** My Class Part **/ 
+/** My Class Part **/
 loader loader;
 btn connectBtn;
 btn sendDataBtn;
@@ -15,7 +15,13 @@ btn butBtn;
 btn faultBtn;
 btn penaltyBtn;
 
+/* LOS COLORES SCHEME SI SI 
 
+
+// color scheme https://coolors.co/app/383d3b-aeffd8-00a896-02c39a-c52233
+
+
+*/
 KetaiBluetooth bt;
 String info = "";
 KetaiList klist;
@@ -53,14 +59,14 @@ void setup()
   avNextMed = createFont("hirak.otf", 36, true);
   ellipseMode(CENTER);
   //start listening for BT connections
-  loader = new loader(50,255);
+  loader = new loader(50, 255);
   connectBtn = new btn(0, height -150, width, 150, "CONNECT", color(#00A896));
   sendDataBtn = new btn(0, height -150, width, 150, "SEND DATA", color(#00A896));
   butBtn = new btn(0, height -300, width, 150, "BUTTTTT !", color(#90DCAD));
   faultBtn = new btn(0, height -450, width, 150, "FAUTE !", color(#AEFFD8));
   faultBtn.nameColor = color (#383D3B);
   penaltyBtn = new btn(0, height -600, width, 150, "PENALTY !", #C52233);
-  
+
   bt.start();
   bt.discoverDevices();
 }
@@ -79,7 +85,7 @@ void draw() {
     }
 
     text("Aviable Device :\n\n" + info, 15, 360);
-     
+
     pushStyle();
     noStroke();
     fill(#02C39A);
@@ -91,7 +97,7 @@ void draw() {
     } else {
       text("DISCOVER ", width/3, height-220);
     }
-   
+
     if (connecting) {
       fill(255);
       pushStyle();
@@ -117,8 +123,10 @@ void draw() {
     line(50, height/3, width-50, height/3);
     noStroke();
     fill(200);
-    ellipse(mouseX-30, height/3, 60, 60);
-    popStyle();
+    if (mouseX > 5O && mouseX < width-50 ) {
+      ellipse(mouseX-30, height/3, 60, 60);
+    }
+    px@opStyle();
     sendDataBtn.display();
     butBtn.display();
     faultBtn.display();
