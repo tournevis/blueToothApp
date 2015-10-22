@@ -5,12 +5,17 @@ import android.graphics.BitmapFactory;
 import ketai.net.bluetooth.*;
 import ketai.ui.*;
 import ketai.net.*;
-
 import oscP5.*;
 
+/** My Class Part **/ 
 loader loader;
 btn connectBtn;
 btn sendDataBtn;
+btn butBtn;
+btn faultBtn;
+btn penaltyBtn;
+
+
 KetaiBluetooth bt;
 String info = "";
 KetaiList klist;
@@ -21,9 +26,11 @@ float d;
 int speed ;
 color c1 = #FFCC00;
 color back = #383D3B;
+
 //*****************************
 // Enable Bluetooth at startup.
 //*****************************
+
 void onCreate(Bundle savedInstanceState) {
   super.onCreate(savedInstanceState);
   bt = new KetaiBluetooth(this);
@@ -40,16 +47,20 @@ void setup()
   orientation(PORTRAIT);
   background(back);
   stroke(255);
-  textSize(24);
   isConf = true;
   connecting =false ;
   isConnect =false ;
-  avNextMed = createFont("hirak.otf", 32, true);
+  avNextMed = createFont("hirak.otf", 36, true);
   ellipseMode(CENTER);
   //start listening for BT connections
   loader = new loader(50,255);
   connectBtn = new btn(0, height -150, width, 150, "CONNECT", color(#00A896));
   sendDataBtn = new btn(0, height -150, width, 150, "SEND DATA", color(#00A896));
+  butBtn = new btn(0, height -300, width, 150, "BUTTTTT !", color(#90DCAD));
+  faultBtn = new btn(0, height -450, width, 150, "FAUTE !", color(#AEFFD8));
+  faultBtn.nameColor = color (#383D3B);
+  penaltyBtn = new btn(0, height -600, width, 150, "PENALTY !", #C52233);
+  
   bt.start();
   bt.discoverDevices();
 }
@@ -102,15 +113,16 @@ void draw() {
     text("Speed : " + speed, 70, 200);
 
     pushStyle();
-    strokeWeight(5);
-    line(50, height/2, width-50, height/2);
+    strokeWeight(70);
+    line(50, height/3, width-50, height/3);
     noStroke();
-    fill(5, 150, 00);
-    if (mouseY < height-150) {
-      ellipse(mouseX- 75, height/2, 150, 150);
-    }
+    fill(200);
+    ellipse(mouseX-30, height/3, 60, 60);
     popStyle();
     sendDataBtn.display();
+    butBtn.display();
+    faultBtn.display();
+    penaltyBtn.display();
   }
 }
 

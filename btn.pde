@@ -20,14 +20,16 @@ class btn {
     fill(bcolor);
     rect(bx, by, bwidth, bheight);
     fill(nameColor);
+    textSize(42);
     text(name ,bx + bwidth/3,by + bheight/2);
     popStyle();
     popMatrix();
+   
   }
   boolean clicked(int inputX , int inputY){
     if(inputX > bx && inputY > by && inputX < (bx+bwidth) && inputY < (by+bheight ) ){
       fill(bcolor);
-      alpha(150);
+      alpha(100);
       rect(bx, by, bwidth, bheight);
       return true; 
     } else {

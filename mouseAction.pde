@@ -1,7 +1,7 @@
 void mousePressed() {
   d = dist(mouseX, mouseY, width/2, height*0.8 );
   if (isConf) {
-    if (connectBtn.clicked(mouseX,mouseY) ) {
+    if (connectBtn.clicked(mouseX, mouseY) ) {
       if (bt.getDiscoveredDeviceNames().size() > 0)
         klist = new KetaiList(this, bt.getDiscoveredDeviceNames());
       else if (bt.getPairedDeviceNames().size() > 0)
@@ -17,14 +17,32 @@ void mousePressed() {
       popStyle();
     }
   }
-  if (isConnect && sendDataBtn.clicked(mouseX,mouseY) ) {
-    pushStyle();
-    fill(120);
-    rect(0,height-150, width,150);
-    popStyle();
-    byte[] bm = new byte[1];
-    bm[0] = byte(speed);
-    bt.writeToDeviceName( deviceName, bm);
+  /*** SEND DATA TO THE ARDUINO HERE  ***/
+  if (isConnect ) {
+    if (sendDataBtn.clicked(mouseX, mouseY) ) {
+      byte[] bm = new byte[2];
+      bm[0] = byte(speed);
+      bm[1] = byte( 4 );
+      bt.writeToDeviceName( deviceName, bm);
+    }
+    if (penaltyBtn.clicked(mouseX, mouseY) ) {
+      byte[] bm = new byte[2];
+      bm[0] = byte(150);
+      bm[1] = byte( 2 );
+      bt.writeToDeviceName( deviceName, bm);
+    }
+    if (butBtn.clicked(mouseX, mouseY) ) {
+      byte[] bm = new byte[2];
+      bm[0] = byte(250);
+      bm[1] = byte( 2 );
+      bt.writeToDeviceName( deviceName, bm);
+    }
+    if (faultBtn.clicked(mouseX, mouseY) ) {
+      byte[] bm = new byte[2];
+      bm[0] = byte(250);
+      bm[1] = byte( 4 );
+      bt.writeToDeviceName( deviceName, bm);
+    }
   }
 }
 void keyPressed() {
@@ -39,7 +57,6 @@ void keyPressed() {
 }
 void mouseDragged() {
   if (isConnect) {
-
     //if ( d < 250 ) {
     /*pushStyle();
      fill( 150, 00, 00);
