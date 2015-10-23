@@ -16,13 +16,13 @@ btn faultBtn;
 btn penaltyBtn;
 
 /* LOS COLORES SCHEME SI SI 
-
-
 // color scheme https://coolors.co/app/383d3b-aeffd8-00a896-02c39a-c52233
-
-
 */
+
+
 KetaiBluetooth bt;
+
+
 String info = "";
 KetaiList klist;
 boolean isConf, connecting, isConnect ;
@@ -123,10 +123,10 @@ void draw() {
     line(50, height/3, width-50, height/3);
     noStroke();
     fill(200);
-    if (mouseX > 5O && mouseX < width-50 ) {
+   if (mouseX > 50 && mouseX < width-50 ) {
       ellipse(mouseX-30, height/3, 60, 60);
     }
-    px@opStyle();
+    popStyle();
     sendDataBtn.display();
     butBtn.display();
     faultBtn.display();
