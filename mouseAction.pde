@@ -22,38 +22,34 @@ void mousePressed() {
     if (sendDataBtn.clicked(mouseX, mouseY) ) {
       byte[] bm = new byte[2];
       bm[0] = byte(speed);
-      bm[1] = byte( 4 );
+      bm[1] = byte(0);
       bt.writeToDeviceName( deviceName, bm);
     }
     if (penaltyBtn.clicked(mouseX, mouseY) ) {
       byte[] bm = new byte[2];
-      bm[0] = byte(150);
-      bm[1] = byte( 2 );
+      bm[0] = byte(8);
+      bm[1] = byte(3);
       bt.writeToDeviceName( deviceName, bm);
     }
     if (butBtn.clicked(mouseX, mouseY) ) {
       byte[] bm = new byte[2];
-      bm[0] = byte(250);
-      bm[1] = byte( 2 );
+      bm[0] = byte(6);
+      bm[1] = byte(1);
       bt.writeToDeviceName( deviceName, bm);
     }
     if (faultBtn.clicked(mouseX, mouseY) ) {
       byte[] bm = new byte[2];
-      bm[0] = byte(250);
-      bm[1] = byte( 4 );
+      bm[0] = byte(7);
+      bm[1] = byte(2);
+      bt.writeToDeviceName( deviceName, bm);
+    }
+    if (cartonjBtn.clicked(mouseX, mouseY) ) {
+      byte[] bm = new byte[2];
+      bm[0] = byte(9);
+      bm[1] = byte(4);
       bt.writeToDeviceName( deviceName, bm);
     }
   }
-}
-void keyPressed() {
-  /* if (key == CODED){
-   if(keyCode == KeyEvent.KEYCODE_BACK){
-   isConnect = false ;
-   connecting = false;
-   deviceName = "";
-   }
-   }
-   */
 }
 void mouseDragged() {
   if (isConnect) {
@@ -67,6 +63,14 @@ void mouseDragged() {
       speed = int(mapSpeed);
     }
     //}
+  }
+}
+@ Override
+void onBackPressed() {
+  if(isConnect){
+    isConnect = !isConnect;
+  }else{
+    System.exit(0);
   }
 }
 void onKetaiListSelection(KetaiList klist)

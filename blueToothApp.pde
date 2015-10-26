@@ -14,11 +14,11 @@ btn sendDataBtn;
 btn butBtn;
 btn faultBtn;
 btn penaltyBtn;
-
+btn cartonjBtn;
 /* LOS COLORES SCHEME SI SI 
-// color scheme https://coolors.co/app/383d3b-aeffd8-00a896-02c39a-c52233
+    https://coolors.co/app/383d3b-aeffd8-00a896-02c39a-c52233
+    https://coolors.co/app/383d3b-aeffd8-00a896-02c39a-f7ee4a
 */
-
 
 KetaiBluetooth bt;
 
@@ -29,7 +29,7 @@ boolean isConf, connecting, isConnect ;
 String deviceName ="";
 PFont avNextMed ;
 float d;
-int speed ;
+int speed , slideVal ;
 color c1 = #FFCC00;
 color back = #383D3B;
 
@@ -66,6 +66,8 @@ void setup()
   faultBtn = new btn(0, height -450, width, 150, "FAUTE !", color(#AEFFD8));
   faultBtn.nameColor = color (#383D3B);
   penaltyBtn = new btn(0, height -600, width, 150, "PENALTY !", #C52233);
+  cartonjBtn = new btn(0, height -750, width, 150, "CARTON !", color(#F7EE4A));
+  cartonjBtn.nameColor = color (#383D3B);
 
   bt.start();
   bt.discoverDevices();
@@ -115,25 +117,32 @@ void draw() {
     background(back);
     // SLIDER SECTION 
     fill(255);
-    text("Connected to " + deviceName, width/2 -100, 50);
-    text("Speed : " + speed, 70, 200);
-
+    text("Connected to " + deviceName, width/2 -150, 50);
+    
+    /**** SLIDER ****/
+    
     pushStyle();
     strokeWeight(70);
-    line(50, height/3, width-50, height/3);
+    line(50, height/6, width-50, height/6);
     noStroke();
     fill(200);
-   if (mouseX > 50 && mouseX < width-50 ) {
-      ellipse(mouseX-30, height/3, 60, 60);
+   if (mouseX > 50 && mouseX < width-50 && mouseY < height/5 ) {
+       slideVal = mouseX-30 ; 
     }
+    ellipse(slideVal, height/6, 60, 60);
     popStyle();
+    
+    /**MY BUTTONS PARTS  **/
+   
     sendDataBtn.display();
     butBtn.display();
     faultBtn.display();
     penaltyBtn.display();
+     cartonjBtn.display();
   }
 }
 
+    /**** BLUETOOTH FUNCTION  *****/
 String getBluetoothInformation()
 {
   String btInfo = "Server Running: ";
