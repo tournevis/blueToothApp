@@ -39,8 +39,8 @@ void loop() {
   }else {
     duration = 0;
     degre += 15;
-    var = (sin(degre * ( pi / 180 ) ) + 2 ) * 25 ;
-    Serial.println(var);
+    var = (sin(degre * ( pi / 180 ) ) + 2 ) * 30 ;
+    //Serial.println(var);
   }
   analogWrite(mPin, var);
   delay(duration + 40);              // si jamais duration est à zero 
